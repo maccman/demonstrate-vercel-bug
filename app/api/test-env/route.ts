@@ -16,6 +16,6 @@ function execAsync(command: string) {
   });
 }
 
-export async function GET() {
+export async function DELETE() {
   return new Response((await execAsync("convert --version")) + "");
 }
