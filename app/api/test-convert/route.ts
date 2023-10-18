@@ -9,7 +9,7 @@ const handler = async () => {
   const pwdResult = await execAsync("pwd");
 
   // Execute the command
-  const convertResult = await execAsync(`convert version`);
+  const convertResult = await execAsync(`convert --version`);
 
   return NextResponse.json({
     pathResult,
@@ -31,4 +31,4 @@ function execAsync(command: string) {
   });
 }
 
-export const GET = handler as any;
+export const GET = handler;
