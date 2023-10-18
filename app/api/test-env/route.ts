@@ -1,5 +1,7 @@
 import { exec } from "node:child_process";
 
+export const runtime = "nodejs";
+
 function execAsync(command: string) {
   return new Promise((resolve, reject) => {
     exec(command, (error, stdout) => {
