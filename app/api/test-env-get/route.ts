@@ -1,7 +1,5 @@
 import { exec } from "node:child_process";
 
-export const preferredRegion = "iad1";
-
 export const runtime = "nodejs";
 
 function execAsync(command: string) {
