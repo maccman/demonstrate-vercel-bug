@@ -1,36 +1,25 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Vercel env issue
 
-## Getting Started
+This repo demonstrates an issue on Vercel where Vercel provides different environments based on the HTTP method used. Only requests to a GET endpoint have access to things like ImageMagick.
 
-First, run the development server:
+GET has access:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
+alex@bigmac ~ % curl https://demonstrate-vercel-bug.vercel.app/api/test-env-get     
+Version: ImageMagick 6.9.10-97 Q16 x86_64 2023-09-11 https://imagemagick.org
+Copyright: © 1999-2020 ImageMagick Studio LLC
+License: https://imagemagick.org/script/license.php
+Features: Cipher DPC Modules OpenMP(4.5) 
+Delegates (built-in): bzlib cairo fftw fontconfig freetype gslib gvc jbig jng jp2 jpeg lcms ltdl lzma openexr pangocairo png ps raw rsvg tiff webp wmf x xml zlib
+``
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+POST does not.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+alex@bigmac ~ % curl -X POST https://demonstrate-vercel-bug.vercel.app/api/test-env-post  
+Error: Error: Command failed: convert --version
+/bin/sh: convert: command not found
+alex@bigmac ~ % 
+``
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Also, if a route has both a GET and a POST endpoint in it, then it won't have access to imagemagick either.
