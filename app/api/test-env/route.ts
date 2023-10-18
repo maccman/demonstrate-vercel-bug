@@ -19,3 +19,7 @@ function execAsync(command: string) {
 export async function GET() {
   return new Response((await execAsync("convert --version")) + "");
 }
+
+export async function POST() {
+  return new Response((await execAsync("convert --version")) + "");
+}
